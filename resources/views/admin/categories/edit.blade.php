@@ -25,7 +25,8 @@
             @endif
 
             {{-- 65 14:44 --}}
-            <form method="post" action="{{ url('/admin/categories/'.$category->id.'/edit') }}">
+            <form method="post" action="{{ url('/admin/categories/'.$category->id.'/edit') }}" 
+                    enctype="multipart/form-data">
                 {{ csrf_field() }}
 
                 <div class="row">
@@ -36,6 +37,20 @@
                                     value="{{ old('name',$category->name) }}">
                         </div>
                     </div>
+
+                    {{-- 73 6:23 --}}
+                    <div class="col-sm-6">
+                        <label class="control-label">Imagen de la categoria</label>
+                        <input type="file" name="image">
+                        @if($category->image)
+                            <p class="help-block">
+                                Subir solo si desea reemplazar la 
+                                <a href="{{ asset('/storage/images/categories/'.$category->image) }}" target="_blank">
+                                    imagen actual
+                                </a> 
+                            </p>
+                        @endif
+                    </div>                         
                 </div><!-- end row -->
                 
                 {{--    

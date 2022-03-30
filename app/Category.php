@@ -34,11 +34,20 @@ class Category extends Model
     // 67 3:35
     // creacion de accesor
     public function getFeaturedImageUrlAttribute(){
-        // obteniendo todos los productos asociados a la categoria y de ellos seleccionamos uno.
-        $featuredProduct = $this->products()->first();
+        // si la categoria tiene una imagen retornala sino toma una imagen de los productos asociados
+        // a ella y retorna esa imagen.
+        if($this->image)
+            return '/storage/images/categories/'.$this->image;
 
-        // retornamos a la categoria la imagen del producto seleccionado en linea anterior.
-        return $featuredProduct->featured_image_url;
+        // obteniendo todos los productos asociados a la categoria y de ellos seleccionamos uno.
+        $firstProduct = $this->products()->first();
+
+        // si la categoria tiene un producto seleccionalo y toma su foto
+        if($firstProduct)
+            return $firstProduct->featured_image_url;
+
+        // en caso de q la categoria no tenga algun producto asociado retorna la imagen default.
+        return '/storage/images/default.jpg';
     }
 
 

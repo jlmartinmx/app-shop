@@ -189,31 +189,27 @@
                     <h4 class="text-center description">Registrate ingresando tus datos basicos, y podras Realizar
                                     tus pedidos a traves de nuestro centro de compras. Si aun no te decides, de todas
                                     formas, con tu cuenta de usuario podras hacer todas tus consultas sin compromiso.</h4>
-                    <form class="contact-form">
+                    
+                    <form class="contact-form" method="GET" action="{{ route('register') }}">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Nombre</label>
-                                    <input type="email" class="form-control">
+                                    <input type="text" class="form-control" name="name">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Correo electronico</label>
-                                    <input type="email" class="form-control">
+                                    <input type="email" class="form-control" name="email">
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="form-group label-floating">
-                            <label class="control-label">Tu mensaje</label>
-                            <textarea class="form-control" rows="4"></textarea>
                         </div>
 
                         <div class="row">
                             <div class="col-md-4 col-md-offset-4 text-center">
                                 <button class="btn btn-primary btn-raised">
-                                    Envia Consulta
+                                    Iniciar registro
                                 </button>
                             </div>
                         </div>

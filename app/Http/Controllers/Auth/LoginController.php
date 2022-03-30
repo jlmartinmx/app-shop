@@ -25,6 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
+    // aqui se define despues de q el usuario se autentica se envia a 
     protected $redirectTo = '/home';
 
     /**
@@ -36,4 +37,13 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // 74 27:10
+    // OJO aqui se sobre-escribe el metodo username() del trait AutenticatesUsers para
+    // q el campo q se utilice en la autenticacion sea username en lugar del email.
+    public function username(){
+        return 'username';
+    }
+
+
 }

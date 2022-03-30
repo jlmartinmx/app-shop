@@ -24,8 +24,8 @@
                 </div>
             @endif
 
-            {{-- 34 0:0 --}}
-            <form method="post" action="{{ url('/admin/categories') }}">
+            {{-- 34 0:0  x tener un campo tipo file dentro de form  se requiere etiqueta enctype --}}
+            <form method="post" action="{{ url('/admin/categories') }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
 
                 <div class="row">
@@ -35,6 +35,13 @@
                             <input type="text" class="form-control" name="name" value="{{ old('name') }}">
                         </div>
                     </div>
+
+                    {{-- 73 4:26 --}}
+                    <div class="col-sm-6">
+                        <label class="control-label">Imagen de la categoria</label>
+                        <input type="file" name="image">
+                    </div>                    
+
                 </div><!-- end row -->
                 
                 {{--    

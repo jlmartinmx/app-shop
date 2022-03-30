@@ -35,7 +35,7 @@ class Product extends Model
         }
 
         // en caso de q el producto no tenga ninguna imagen retornamos la img default.
-        return '/storage/images/products/default.jpg';
+        return '/storage/images/default.jpg';
     }
 
     // accesor para cuando se solicita la categoria de un producto y en caso

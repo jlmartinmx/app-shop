@@ -24,9 +24,9 @@
                         <div class="content">
 
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="material-icons">email</i></span>                                                                    
-                                <input id="email" type="email" placeholder="Email"  class="form-control" 
-                                        name="email" value="{{ old('email') }}" required autofocus />
+                                <span class="input-group-addon"><i class="material-icons">fingerprint</i></span>                                                                    
+                                <input id="username" type="text" placeholder="Username"  class="form-control" 
+                                        name="username" value="{{ old('username') }}" required autofocus />
                             </div>
 
                             <div class="input-group">

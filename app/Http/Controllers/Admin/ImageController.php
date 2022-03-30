@@ -86,7 +86,7 @@ class ImageController extends Controller
             //.$fullPath = public_path() . '/images/products/' . $productImage->image;
             // con metodo Storage::delete busca para eliminar el archivo desde /storage/app y considerando
             // q existe un link de ../public/storage entonces la ruta para eliminar archivos sera public/images/products/nom_file            
-            $fullPath = 'public/images/products/' . $productImage->image;
+            $fullPath = 'public/images/products/' . $productImage->image; 
 
             // 46 10:20
             //.$deleted = File::delete($fullPath);// deleted almacena true/false dependiendo de resultado.

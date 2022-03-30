@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
+use League\Flysystem\File;
+use Illuminate\Support\Facades\Storage;
 
 // 65 0:0
 class CategoryController extends Controller
@@ -45,8 +47,29 @@ class CategoryController extends Controller
         $category->save(); // insert
         */
 
-        // esta linea es gracias a la asignacion masiva en modelo Category
-        Category::create( $request->all() );
+        // esta linea es gracias a la asignacion masiva en modelo Category y se cambia x sig linea
+        // x q se agrego campo image en formulario de crea nueva categoria.
+        //. Category::create( $request->all() );
+        // esto se puede hacer gracias a q el campo image en categories acepta nulos.
+        $category = Category::create( $request->only('name','description') );
+
+        // 73 8:10 con sig if preguntamos si en los datos enviados del formulario el campo image tiene 
+        // un dato entra al if.
+        if($request->hasFile('image')){
+            // $file almacena el nombre y ruta temporal de la nueva imagen.
+            $file = $request->file('image');
+            $path = public_path() . '/storage/images/categories';// ruta donde se almacena la imagen
+            $fileName = uniqid() . '-' . $file->getClientOriginalName();// se crea nombre para nueva imagen
+            // se mueve la nueva imagen de su ruta temporal a la nueva ruta path con nuevo nombre.
+            $moved = $file->move($path,$fileName); 
+
+            // actualizamos campo image de tabla categories del recien registro creado en $category.
+            if($moved){
+                $category->image = $fileName;
+                $category->save();
+            }
+
+        }
 
         // OJO el default de un redirect es method=get x eso se va CategoryController@index
         return redirect('/admin/categories');
@@ -90,7 +113,34 @@ class CategoryController extends Controller
         // aqui rules y messages no son metodos de Category sino propiedades.
         $this->validate($request,Category::$rules,Category::$messages);
 
-        $category->update($request->all());
+        // esto se puede hacer gracias a q el campo image en categories acepta nulos.
+        $category->update( $request->only('name','description') );
+
+        // 73 17:15 con sig if preguntamos si en los datos enviados del formulario el campo image tiene 
+        // un dato entra al if.
+        if($request->hasFile('image')){
+            // $file almacena el nombre y ruta temporal de la nueva imagen.
+            $file = $request->file('image');
+            $path = public_path() . '/storage/images/categories';// ruta donde se almacena la imagen
+            $fileName = uniqid() . '-' . $file->getClientOriginalName();// se crea nombre para nueva imagen
+            // se mueve la nueva imagen de su ruta temporal a la nueva ruta path con nuevo nombre.
+            $moved = $file->move($path,$fileName); 
+
+            // actualizamos campo image de tabla categories del recien registro creado en $category.
+            if($moved){
+                //$previousPath = $path . '/' .$category->image;
+                $previousPath = 'public/images/categories/'.$category->image;
+
+                $category->image = $fileName;
+                $saved = $category->save(); // se salva la nueva imagen
+
+                // si se salvo la nueva imagen entonces se procede a borrar la vieja imagen.
+                if($saved)
+                    // 73 19:23                
+                    Storage::delete([$previousPath]);                
+            }
+
+        }
 
         return redirect('/admin/categories');
 

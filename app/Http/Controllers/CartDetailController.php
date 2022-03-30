@@ -6,8 +6,14 @@ use Illuminate\Http\Request;
 use App\CartDetail;
 
 // 54 0:0
-class CartDetailController extends Controller
-{
+class CartDetailController extends Controller{
+    public function __construct(){
+        // 75 1:38
+        // de esta forma aplicamos mediante auth la autenticacion a todas las rutas donde
+        // intervenga este controlador.
+        $this->middleware('auth');
+    }
+
     public function store(Request $request){
         $cartDetail = new CartDetail();
         
